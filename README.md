@@ -4,7 +4,7 @@ Reference List for RISC-V
 本仓库维护与labeled risv-v相关的参考资料信息。
 
 ## 学术论文
- 1. Zihao Yu, et al., Labeled RISC-V: A New Perspective on Software-Defined Architecture [slides](https://riscv.org/wp-content/uploads/2017/05/Tue0930am-Labeled-RISC-V-Yu.pdf) [paper](https://carrv.github.io/papers/yu-labeled_riscv-carrv2017.pdf) , RISCV workshop 2017 autumn
+ 1. Zihao Yu, et al., Labeled RISC-V: A New Perspective on Software-Defined Architecture [slides](https://riscv.org/wp-content/uploads/2017/05/Tue0930am-Labeled-RISC-V-Yu.pdf) , [paper](https://carrv.github.io/papers/yu-labeled_riscv-carrv2017.pdf) , RISCV workshop 2017 autumn
  1. David Lo, et al., [Heracles: Improving Resource Efficiency at Scale](csl.stanford.edu/~christos/publications/2015.heracles.isca.pdf) , ISCA 2015
  1. George Prekas, et al., [ZygOS: Achieving Low Tail Latency for Microsecond-scale Networked Tasks](https://infoscience.epfl.ch/record/231395/files/sosp17-final278.pdf) , SOSP 2017
  1. L. Ravindranath et al., Timecard: Controlling User-Perceived Delays in Server-Based Mobile Applications, SOSP, 2013.
