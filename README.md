@@ -9,7 +9,6 @@ Reference List for RISC-V
  1. [https://infoscience.epfl.ch/record/231395/files/sosp17-final278.pdf](https://infoscience.epfl.ch/record/231395/files/sosp17-final278.pdf) , SOSP 2017
  1. L. Ravindranath et al., Timecard: Controlling User-Perceived Delays in Server-Based Mobile Applications, SOSP, 2013.
  1. L. Albert Greenberg, SDN for the Cloud, SIGCOMM Keynote, 2015.
-   http://www.gartner.com/newsroom/id/1472714.
  1. J. M. Kaplan, W. Forrest, and N. Kindler. Revolutionizing data center energy efficiency. McKinsey & Company, 2008.
  1. Huan Liu, A Measurement Study of Server Utilization in Public Clouds, 2011.
  1. J. Dean,“Achieving Rapid Response Times in Large Online Services”, talk at Berkeley, 2012.
@@ -20,6 +19,7 @@ Reference List for RISC-V
  1. Jeff Dean, Software Engineering Advice from Building Large-Scale Distributed Systems 2016
  1. T. Chen et al., Statistical Performance Comparisons of Computers, HPCA 2012.
  1. D. Krushevskaja and M.Sandler, Understanding Latency Variations of Black Box Services, WWW 2013.
+ 1. http://www.gartner.com/newsroom/id/1472714.
 
 ## 代码仓库
 
