@@ -20,6 +20,11 @@ Reference List for RISC-V
  1. T. Chen et al., Statistical Performance Comparisons of Computers, HPCA 2012.
  1. D. Krushevskaja and M.Sandler, Understanding Latency Variations of Black Box Services, WWW 2013.
  1. http://www.gartner.com/newsroom/id/1472714.
+ 
+ ### CACHE隔离/内存带宽隔离
+ 1. QoS Policies and Architecture for Cache/Memory in CMP Platforms
+ 1. A QoS-aware Memory Controller for Dynamically Balancing GPU and CPU Bandwidth Use in an MPSoC.
+ 1. Reducing Memory Interference in Multicore Systems via Application-aware Memory Channel Partitioning.
 
 ## 代码仓库
  1. http://github.com/fsg-ict/labeled-RISC-V 
