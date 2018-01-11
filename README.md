@@ -21,7 +21,19 @@ Reference List for RISC-V
  1. D. Krushevskaja and M.Sandler, Understanding Latency Variations of Black Box Services, WWW 2013.
  1. http://www.gartner.com/newsroom/id/1472714.
  
- ### CACHE隔离/内存带宽隔离
+ ### CACHE隔离
+ 1. Quasar: Resource-Efficient and QoS-Aware Cluster Management
+ 1. Cuanta: quantifying effects of shared on-chip resource interference for consolidated virtual machines
+ 1. Reconciling High Server Utilization and Sub-millisecond Quality-of-Service
+ 1. Increasing Utilization in Modern Warehouse-Scale Computers Using Bubble-Up
+ 1. Scalable and Efficient Fine-Grained Cache Partitioning with Vantage
+ 1. A Hardware Evaluation of Cache Partitioning to Improve Utilization and Energy-efficiency While Preserving Responsiveness
+ 1. QoS Policies and Architecture for Cache/Memory in CMP Platforms
+ 1. A low-overhead, highperformance,runtime mechanism to partition shared caches.
+ 1. Gaining insights into multicore cache partitioning: Bridging the gap between simulation and real systems
+ 1. 1Q-Clouds: Managing Performance Interference Effects for QoS-Aware Clouds
+ 
+ ### 内存带宽隔离
  1. QoS Policies and Architecture for Cache/Memory in CMP Platforms
  1. A QoS-aware Memory Controller for Dynamically Balancing GPU and CPU Bandwidth Use in an MPSoC.
  1. Reducing Memory Interference in Multicore Systems via Application-aware Memory Channel Partitioning.
