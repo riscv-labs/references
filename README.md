@@ -25,6 +25,8 @@ Reference List for RISC-V
  1. QoS Policies and Architecture for Cache/Memory in CMP Platforms
  1. A QoS-aware Memory Controller for Dynamically Balancing GPU and CPU Bandwidth Use in an MPSoC.
  1. Reducing Memory Interference in Multicore Systems via Application-aware Memory Channel Partitioning.
+ 1. A Case for NUMA-aware Contention Management on Multicore Systems
+ 1. The impact of memory subsystem resource sharing on datacenter applications
 
 ## 代码仓库
  1. http://github.com/fsg-ict/labeled-RISC-V 
