@@ -20,6 +20,7 @@ Reference List for RISC-V
  1. T. Chen et al., Statistical Performance Comparisons of Computers, HPCA 2012.
  1. D. Krushevskaja and M.Sandler, Understanding Latency Variations of Black Box Services, WWW 2013.
  1. http://www.gartner.com/newsroom/id/1472714.
+ 1. [FreeBSD/RISC-V and Device Drivers BSDTW2017](https://bsdtw.org/slides/BSDTW2017-D2-3-Ruslan.pdf)
  
  ### CACHE隔离
  1. Quasar: Resource-Efficient and QoS-Aware Cluster Management
@@ -41,5 +42,5 @@ Reference List for RISC-V
  1. The impact of memory subsystem resource sharing on datacenter applications
 
 ## 代码仓库
- 1. http://github.com/fsg-ict/labeled-RISC-V 
+ 1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
 
