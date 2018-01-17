@@ -41,6 +41,10 @@ Reference List for RISC-V
  1. A Case for NUMA-aware Contention Management on Multicore Systems
  1. The impact of memory subsystem resource sharing on datacenter applications
 
+## 技术报告
+ 1. [Documentation for RISC-V Spike](https://github.com/poweihuang17/Documentation_Spike)
+ 1. [blog of various RISC-V ports(linux/gcc/glibc...) from Palmer Dabbelt](https://www.sifive.com/blog/2017/08/07/all-aboard-part-0-introduction/)
+ 
 ## 代码仓库
  1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
  1. [educational microarchitectures for risc-v isa](https://github.com/ucb-bar/riscv-sodor)
