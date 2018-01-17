@@ -43,4 +43,10 @@ Reference List for RISC-V
 
 ## 代码仓库
  1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
+ 1. [educational microarchitectures for risc-v isa](https://github.com/ucb-bar/riscv-sodor)
 
+## News
+ 1. [CNRV](https://cnrv.io/)
+ 
+## 其他资源
+ 1. [resrouce from CNRV](https://github.com/cnrv/home/blob/master/resource.md)
