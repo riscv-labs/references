@@ -50,3 +50,4 @@ Reference List for RISC-V
  
 ## 其他资源
  1. [resrouce from CNRV](https://github.com/cnrv/home/blob/master/resource.md)
+ 1. [papers from CNRV](https://github.com/cnrv/home/blob/master/papers.md)
