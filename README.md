@@ -51,6 +51,12 @@ Reference List for RISC-V
  1. [Perf Tool: Performance Analysis Tool for Linux](http://lacasa.uah.edu/portal/Upload/tutorials/perf.tool/PerfTool.pdf)
  1. [Linux 性能诊断 perf使用指南](https://yq.aliyun.com/articles/65255)
  1. [Linux 效能分析工具: Perf](http://wiki.csie.ncku.edu.tw/embedded/perf-tutorial)
+
+## benchmarks
+ 1. [TailBench: A Benchmark Suite and Evaluation Methodology for Latency-Critical Applications](http://tailbench.csail.mit.edu/)
+ 1. [sysbench:Scriptable database and system performance benchmark](https://github.com/akopytov/sysbench)
+ 1. [hackbench − scheduler benchmark/stress test](https://man.cx/hackbench)
+ 1. [LLCbench - Low Level Architectural Characterization Benchmark Suite](http://icl.cs.utk.edu/llcbench/)
  
 ## 代码仓库
  1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
