@@ -57,6 +57,7 @@ Reference List for RISC-V
  1. [sysbench:Scriptable database and system performance benchmark](https://github.com/akopytov/sysbench)
  1. [hackbench − scheduler benchmark/stress test](https://man.cx/hackbench)
  1. [LLCbench - Low Level Architectural Characterization Benchmark Suite](http://icl.cs.utk.edu/llcbench/)
+ 1. [HPC Challenge Benchmark](http://icl.cs.utk.edu/hpcc/)
  
 ## 代码仓库
  1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
