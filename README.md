@@ -44,6 +44,13 @@ Reference List for RISC-V
 ## 技术报告
  1. [Documentation for RISC-V Spike](https://github.com/poweihuang17/Documentation_Spike)
  1. [blog of various RISC-V ports(linux/gcc/glibc...) from Palmer Dabbelt](https://www.sifive.com/blog/2017/08/07/all-aboard-part-0-introduction/)
+
+## perf tools
+ 1. [perf tutorial](https://perf.wiki.kernel.org/index.php/Tutorial)
+ 1. [perf examples](http://www.brendangregg.com/perf.html)
+ 1. [Perf Tool: Performance Analysis Tool for Linux](http://lacasa.uah.edu/portal/Upload/tutorials/perf.tool/PerfTool.pdf)
+ 1. [Linux 性能诊断 perf使用指南](https://yq.aliyun.com/articles/65255)
+ 1. [Linux 效能分析工具: Perf](http://wiki.csie.ncku.edu.tw/embedded/perf-tutorial)
  
 ## 代码仓库
  1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
