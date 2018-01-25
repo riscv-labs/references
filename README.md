@@ -4,6 +4,7 @@ Reference List for RISC-V
 本仓库维护与labeled risv-v相关的参考资料信息。
 
 ## 学术论文
+ 1. [Hardware Execution Throttling for Multi-core Resource Management , USENIX ATC 09](http://static.usenix.org/events/usenix09/tech/full_papers/zhang/zhang_html/)
  1. Zihao Yu, et al., Labeled RISC-V: A New Perspective on Software-Defined Architecture [slides](https://riscv.org/wp-content/uploads/2017/05/Tue0930am-Labeled-RISC-V-Yu.pdf) , [paper](https://carrv.github.io/papers/yu-labeled_riscv-carrv2017.pdf) , RISCV workshop 2017 autumn
  1. David Lo, et al., [Heracles: Improving Resource Efficiency at Scale](csl.stanford.edu/~christos/publications/2015.heracles.isca.pdf) , ISCA 2015
  1. George Prekas, et al., [ZygOS: Achieving Low Tail Latency for Microsecond-scale Networked Tasks](https://infoscience.epfl.ch/record/231395/files/sosp17-final278.pdf) , SOSP 2017
@@ -23,6 +24,7 @@ Reference List for RISC-V
  1. [FreeBSD/RISC-V and Device Drivers BSDTW2017](https://bsdtw.org/slides/BSDTW2017-D2-3-Ruslan.pdf)
  
  ### CACHE隔离
+ 1. [A Survey of Techniques for Cache Partitioning in Multicore Processors](https://www.researchgate.net/publication/314352438_A_Survey_of_Techniques_for_Cache_Partitioning_in_Multicore_Processors)
  1. Quasar: Resource-Efficient and QoS-Aware Cluster Management
  1. Cuanta: quantifying effects of shared on-chip resource interference for consolidated virtual machines
  1. Reconciling High Server Utilization and Sub-millisecond Quality-of-Service
