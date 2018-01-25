@@ -24,7 +24,8 @@ Reference List for RISC-V
  1. [FreeBSD/RISC-V and Device Drivers BSDTW2017](https://bsdtw.org/slides/BSDTW2017-D2-3-Ruslan.pdf)
  
  ### CACHE隔离
- 1. [A Survey of Techniques for Cache Partitioning in Multicore Processors](https://www.researchgate.net/publication/314352438_A_Survey_of_Techniques_for_Cache_Partitioning_in_Multicore_Processors)
+ 1. [A Survey of Techniques for Cache Partitioning in Multicore Processors, ACM Computing Surveys 2017](https://www.researchgate.net/publication/314352438_A_Survey_of_Techniques_for_Cache_Partitioning_in_Multicore_Processors)
+ 1. [SWAP: Effective Fine-Grain Management of Shared Last-Level Caches with Minimum Hardware Support, HPCA17](http://www.csl.cornell.edu/~xiaodong/docs/SWAP.pdf)
  1. Quasar: Resource-Efficient and QoS-Aware Cluster Management
  1. Cuanta: quantifying effects of shared on-chip resource interference for consolidated virtual machines
  1. Reconciling High Server Utilization and Sub-millisecond Quality-of-Service
