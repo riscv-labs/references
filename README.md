@@ -44,6 +44,10 @@ Reference List for RISC-V
  1. A Case for NUMA-aware Contention Management on Multicore Systems
  1. The impact of memory subsystem resource sharing on datacenter applications
 
+### 调度相关
+ 1. [The Linux Scheduler: A Decade of Wasted Cores](https://www.ece.ubc.ca/~sasha/papers/eurosys16-final29.pdf)
+ 1. [Reconciling High Server Utilization and Sub-millisecond Quality-of-Service](csl.stanford.edu/~christos/publications/2014.mutilate.eurosys.pdf)
+
 ## 技术报告
  1. [Documentation for RISC-V Spike](https://github.com/poweihuang17/Documentation_Spike)
  1. [blog of various RISC-V ports(linux/gcc/glibc...) from Palmer Dabbelt](https://www.sifive.com/blog/2017/08/07/all-aboard-part-0-introduction/)
