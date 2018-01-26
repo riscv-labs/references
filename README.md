@@ -6,7 +6,7 @@ Reference List for RISC-V
 ## 学术论文
   1. [Hardware Execution Throttling for Multi-core Resource Management , USENIX ATC 09](http://static.usenix.org/events/usenix09/tech/full_papers/zhang/zhang_html/)
   2. Zihao Yu, et al., Labeled RISC-V: A New Perspective on Software-Defined Architecture [slides](https://riscv.org/wp-content/uploads/2017/05/Tue0930am-Labeled-RISC-V-Yu.pdf) , [paper](https://carrv.github.io/papers/yu-labeled_riscv-carrv2017.pdf) , RISCV workshop 2017 autumn
-  3. David Lo, et al., [Heracles: Improving Resource Efficiency at Scale](csl.stanford.edu/~christos/publications/2015.heracles.isca.pdf) , ISCA 2015
+  3. David Lo, et al., [Heracles: Improving Resource Efficiency at Scale](http://csl.stanford.edu/~christos/publications/2015.heracles.isca.pdf) , ISCA 2015
   4. George Prekas, et al., [ZygOS: Achieving Low Tail Latency for Microsecond-scale Networked Tasks](https://infoscience.epfl.ch/record/231395/files/sosp17-final278.pdf) , SOSP 2017
   5. L. Ravindranath et al., [Timecard: Controlling User-Perceived Delays in Server-Based Mobile Applications](http://delivery.acm.org/10.1145/2530000/2522717/p85-ravindranath.pdf), SOSP, 2013.
   6. L. Albert Greenberg, [SDN for the Cloud](http://conferences.sigcomm.org/sigcomm/2015/pdf/papers/keynote.pdf), SIGCOMM Keynote, 2015.
@@ -46,7 +46,7 @@ Reference List for RISC-V
 
 ### 调度相关
  1. [The Linux Scheduler: A Decade of Wasted Cores](https://www.ece.ubc.ca/~sasha/papers/eurosys16-final29.pdf)
- 1. [Reconciling High Server Utilization and Sub-millisecond Quality-of-Service](csl.stanford.edu/~christos/publications/2014.mutilate.eurosys.pdf)
+ 1. [Reconciling High Server Utilization and Sub-millisecond Quality-of-Service](http://csl.stanford.edu/~christos/publications/2014.mutilate.eurosys.pdf)
 
 ## 技术报告
   1. [Documentation for RISC-V Spike](https://github.com/poweihuang17/Documentation_Spike)
