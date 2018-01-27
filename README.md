@@ -47,6 +47,7 @@ Reference List for RISC-V
 ### 调度相关
  1. [The Linux Scheduler: A Decade of Wasted Cores](https://www.ece.ubc.ca/~sasha/papers/eurosys16-final29.pdf)
  1. [Reconciling High Server Utilization and Sub-millisecond Quality-of-Service](http://csl.stanford.edu/~christos/publications/2014.mutilate.eurosys.pdf)
+ 1. [Borrowed-Virtual-Time (BVT) scheduling: supporting latency-sensitive threads in a general-purpose scheduler](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.131.6844&rep=rep1&type=pdf)
  1. [Cache-Guided Scheduling: Exploiting Caches to Maximize Locality in Graph Processing, AGP 2017](http://people.csail.mit.edu/sanchez/papers/2017.cgs.agp.pdf)
 
 ## 技术报告
