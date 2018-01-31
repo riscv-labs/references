@@ -72,7 +72,7 @@ Reference List for RISC-V
   1. [ZSim: Fast and Accurate Microarchitectural Simulation of Thousand-Core Systems](http://people.csail.mit.edu/sanchez/papers/2013.zsim.isca.pdf)
 
 ## 代码仓库
-  1. [labeled riscv](http://github.com/fsg-ict/labeled-RISC-V)
+  1. [labeled riscv](http://github.com/LvNA-system/labeled-RISC-V)
   1. [educational microarchitectures for risc-v isa](https://github.com/ucb-bar/riscv-sodor)
 
 ## News
