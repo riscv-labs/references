@@ -55,6 +55,7 @@ Reference List for RISC-V
   1. [blog of various RISC-V ports(linux/gcc/glibc...) from Palmer Dabbelt](https://www.sifive.com/blog/2017/08/07/all-aboard-part-0-introduction/)
 
 ## perf tools
+  1. [Linux Performance Tools](http://www.brendangregg.com/linuxperf.html)
   1. [perf tutorial](https://perf.wiki.kernel.org/index.php/Tutorial)
   1. [perf examples](http://www.brendangregg.com/perf.html)
   1. [Perf Tool: Performance Analysis Tool for Linux](http://lacasa.uah.edu/portal/Upload/tutorials/perf.tool/PerfTool.pdf)
