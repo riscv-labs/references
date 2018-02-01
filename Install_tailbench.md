@@ -2,7 +2,10 @@
 
 ### 从哪里获取？
 
-MIT官网。
+MIT官网 http://tailbench.csail.mit.edu/
+
+### 系统环境
+ubuntu 16.04 x86-64
 
 ### 环境变量
 
