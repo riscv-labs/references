@@ -2,7 +2,7 @@
 
 本文记录在zedboard上安装pard系统的具体过程。
 
-- PRM：实际上是一个Debian base system，安装在SD卡上。zedboard加电后首先会加载一个引导程序，引导程序完成加载PRM和将RISCV CPU烧到FPGA中，PRM再引导Linux在RISCV CPU上启动。
+- PRM：实际上是一个Debian base system，安装在SD卡上。zedboard加电后首先会加载一个引导程序(BOOT.BIN or boot.bin)，引导程序完成加载PRM和将RISCV CPU烧到FPGA中，PRM再引导riscv-linux(在SD卡上的一个文件)在RISCV CPU上启动。
 - riscv-linux：运行在RISCV上的Linux。
 - zedboard project：RISCV的vivado工程。
 
@@ -20,7 +20,7 @@
         sudo apt install libncurses5-dev libncursesw5-dev qemu-user-static minicom libssl-dev
         ```
 
-      - 需要安装GMP，MPFR和MPC
+      - 需要安装GMP，MPFR和MPC (for riscv-toolchains)
 
         ```
         # Download the latest version from ftp://gcc.gnu.org/pub/gcc/infrastructure
@@ -48,7 +48,7 @@
         1. 从xilinx官网下载vivado2017.4(注：2017.3不能正常加载riscv的项目文件，请务必使用2017.4版本)
         2. 解压
         3. 运行xsetup
-        4. 安装在/opt/Xilinx目录下
+        4. 安装在/opt/Xilinx目录下 (或其他用户指定目录)
         5. Linux下安装完后需要多一步，安装cable驱动
         ```bash
           cd Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers/
@@ -65,14 +65,17 @@
    git submodule update --init	# 安装子模块
 
    # 编译riscv-tools
-   cd riscv-tools	#在riscv-tools目录下
+   cd labeled-RISC-V/riscv-tools	#在riscv-tools目录下
    git submodule update --init --recursive
    export RISCV=/opt/riscv/tool
    ./build.sh	# 如果编译32位版本，应运行build-rv32ima.sh脚本
-   # 此时进到/opt/riscv/tools/bin目录下，看到的文件是riscv64-unknown-elf-*，而我们还需要riscv64-unknown-linux-gun-*，所以需要下面的步骤
+   # 此时进到/opt/riscv/tools/bin目录下，看到的文件是riscv64-unknown-elf-*，而我们还需要riscv64-unknown-linux-gun-*，所以需要下面的步骤 (这步可以更简单一点)
    cd riscv-gun-toolchain
-   ./configure --prefix=$RISCV	#生成makefile文件，用以生成riscv64-unknown-linux-gnu-*
-   make linux	#编译，成功后会看到/opt/riscv/tools/bin目录下生成了我们需要的文件
+   ./configure --prefix=$RISCV	#生成makefile文件，用以生成riscv64-unknown-linux-gnu-* 
+   make linux	#编译，成功后会看到/opt/riscv/tools/bin目录下生成了我们需要的toolchains文件
+    (上述两步可以更简单一点，用一步完成)
+   cd到riscv-tools目录
+   build_project riscv-gnu-toolchain --prefix=$RISCV --with-arch=rv64imafdc --with-abi=lp64d --enable-linux
    ```
 2. 编译riscv-pk和riscv-linux
    ```shell
@@ -96,7 +99,8 @@
 
    # 编译和运行模拟器
    cd fpga/emulator
-   make -j8 run-emu	# 未成功
+   make -j8 run-emu	# 成功
+
    ```
 
 4. FPGA中运行
@@ -109,8 +113,8 @@
      make project PRJ=myproject BOARD=zedboard
      ````
 
-     1. 在vivado中打开此项目,即build/myroject-zedboard/myprojct-zedboard.xpr
-     2. 生成bitstream，即Synthesis->Implementation->Bitstream
+     1. 在vivado中打开此项目,即build/myroject-zedboard/myprojct-zedboard.xpr  （参考的绝对路径 /chydata/xilinx/labeled-RISC-V/fpga/build/myproj-zedboard）
+     2. 生成bitstream，即Synthesis->Implementation->Bitstream。再这会生成system_top.bit (pard的bitstream文件)
 
 
   - 准备SD卡
@@ -121,11 +125,14 @@
 
          注：需要把gmake 链接为make
 
-       - 运行hsi命令，hsi是vivado SDK附带的命令
+         fsbl contents ???
+
+       - 运行hsi命令，hsi是vivado SDK附带的命令 （功能???）
 
          ```shell
          cd board/zedboard/boot
          hsi -nojournal -nolog -source gen-fsbl.tcl -tclargs ../../../build/myproject-zedboard/myproject-zedboard.sdk/system_top.hdf
+         绝对路径在/chydata/xilinx/labeled-RISC-V/fpga/build/myproj-zedboard/myproj-zedboard.sdk
          # 生成的文件在build目录下，叫excutable.elf，应把excutable.elf重命名为fsbl.elf
          ```
 
@@ -146,10 +153,10 @@
     3. 编译boot.bin
 
        - 将fsbl.elf和u-boot.elf和system_top.bit文件放在build目录下
-       - 修改的不是gen-bootbin.sh，而是bootgen.bif文件，添加以上文件正确的路径名。且system_top.bit应在u-boot.elf的前面，否则后继步骤里PRM无法正常启动。
+       - boot.bin修改的不是gen-bootbin.sh，而是bootgen.bif文件，添加以上文件正确的路径名。且system_top.bit应在u-boot.elf的前面，否则后继步骤里PRM无法正常启动。
        - `bash gen-bootbin.sh   #BOOT.BIN将会生成在build目录`
 
-    4. 编译linux kernel
+    4. 编译linux kernel for PRM
 
        ```powershell
        git clone https://github.com/xilinx/linux-xlnx
@@ -220,9 +227,9 @@
       sudo mount /dev/sdc1 /mnt/boot
     ```
 
-       - 将上几步生成的BOOT.BIN，system.dtb， zImage复制到/mnt/boot目录下
+       - 将上几步生成的BOOT.BIN，system.dtb， zImage(PRM的kernel)复制到/mnt/boot目录下
 
-       - 安装debian基本系统
+       - 安装debian基本系统 ???
 
          ```shell
          sudo qemu-debootstrap --arch armel stable /mnt http://ftp.debian.org/debian
@@ -243,7 +250,7 @@
 
          ​
 
-  - 设置开发板为SD boot模式
+  - 设置开发板为SD boot模式(需要动板子上的几个开关???)
 
   - 启动PRM Linux，PRM就是安装在SD卡上的debian基本系统
 
@@ -257,6 +264,7 @@
        load mmc 0:auto 0x3000000 zImage
        load mmc 0:auto 0x2a00000 system.dtb
        bootz 0x3000000 - 0x2a00000
+       启动RPM linux, root 空格
        ```
 
        ​
