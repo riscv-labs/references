@@ -2,25 +2,45 @@
 
 本文记录在zedboard上安装pard系统的具体过程。
 
-- PRM：实际上是一个Debian base system，安装在SD卡上。zedboard加电后首先会加载一个引导程序(BOOT.BIN or boot.bin)，引导程序完成加载PRM和将RISCV CPU烧到FPGA中，PRM再引导riscv-linux(在SD卡上的一个文件)在RISCV CPU上启动。
-- riscv-linux：运行在RISCV上的Linux。
-- zedboard project：RISCV的vivado工程。
+#### 安装流程简介：
+
+0. 运行平台准备：依赖的工具列表和需要的源代码仓库
+1. 编译工具链：riscv gnu toolchain
+2. 编译linux.bin：linux kernel for riscv
+3. 模拟器中运行(可选，并非必须步骤)
+4. 编译boot.bin：zedboard加电后首先会运行此程序，完成将RISCV CPU写到FPGA并加载PRM的功能
+   1. 编译system_top.bit：Bitstream of riscv cpu
+   2. 编译fsbl.elf：First Stage Boot Loader
+   3. 编译u-boot：Boot Loader
+   4. 生成boot.bin：system_top.bit + fsbl.elf + u-boot
+5. 编译system.dtb：设备树文件，辅助加载PRM
+6. 编译zImage：linux kernel for arm PRM
+7. 在SD卡上安装PRM
+8. 在zedboard上启动PRM
+
+#### 启动流程简介：
+
+PRM实际上是一个Debian base system，安装在SD卡上。zedboard加电后首先会加载一个引导程序(BOOT.BIN or boot.bin)，引导程序完成加载PRM和将RISCV CPU烧到FPGA中，PRM再引导riscv-linux(在SD卡上的一个文件)在RISCV CPU上启动。
 
 ### 安装过程
 
-0. 运行平台准备
+#### 0. 运行平台准备
 
-      - ubuntu 16.04 x86_64
+  - ubuntu 16.04 x86_64
 
-      - zedboard开发板
+  - zedboard开发板
 
-      - 如下软件包是必需的，可以提前安装好
+  - 依赖的工具列表
 
         ```shell 
+        # for riscv-tools
+        sudo apt-get install autoconf automake autotools-dev curl libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev
+        
+        # other needed tools
         sudo apt install libncurses5-dev libncursesw5-dev qemu-user-static minicom libssl-dev
         ```
 
-      - 需要安装GMP，MPFR和MPC (for riscv-toolchains)
+  - 需要安装GMP，MPFR和MPC (for riscv-toolchains)
 
         ```
         # Download the latest version from ftp://gcc.gnu.org/pub/gcc/infrastructure
@@ -41,32 +61,47 @@
         ./configure --prefix=/opt/mpc-1.0.3 --with-gmp=/opt/gmp-6.1.0 --with-mpfr=/opt/mpfr-3.1.4
         ```
 
-        ​
 
-      - 需要安装vivado2017.4
+  - 需要安装vivado2017.4
 
-        1. 从xilinx官网下载vivado2017.4(注：2017.3不能正常加载riscv的项目文件，请务必使用2017.4版本)
-        2. 解压
-        3. 运行xsetup
-        4. 安装在/opt/Xilinx目录下 (或其他用户指定目录)
-        5. Linux下安装完后需要多一步，安装cable驱动
-        ```bash
-          cd Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers/
-         sudo ./install_drivers
-        ```
+           1. 从xilinx官网下载vivado2017.4(注：2017.3不能正常加载riscv的项目文件，请务必使用2017.4版本)
+           2. 解压
+           3. 运行xsetup
+           4. 安装在/opt/Xilinx目录下 (或其他用户指定目录)
+           5. Linux下安装完后需要多一步，安装cable驱动
+  ```bash
+         cd Xilinx/Vivado/2017.4/data/xicom/cable_drivers/lin64/install_script/install_drivers/
+        sudo ./install_drivers
+  ```
 
-        ​
 
-1. 准备运行环境
+- 需要的源代码仓库
+
+     ```bash
+        # 下载labeled-RISC-V源码仓库
+        git clone https://github.com/LvNA-system/labeled-RISC-V.git	# 下载源码
+        cd labeled-RISC-V
+        git submodule update --init	# 安装子模块
+        cd labeled-RISC-V/riscv-tools	#在riscv-tools目录下
+        git submodule update --init --recursive	# 安装子模块
+        
+        # 下载u-boot源码仓库
+        git clone https://github.com/xilinx/u-boot-xlnx
+        
+        # zedboard的设备树
+        git clone https://github.com/xilinx/device-tree-xlnx
+        
+        # PRM的Linux kernel仓库
+        git clone https://github.com/xilinx/linux-xlnx
+     ```
+
+     ​
+
+     ​
+
+#### 1. 编译工具链
    ```bash
-   # 下载labeled-riscv源码
-   git clone https://github.com/LvNA-system/labeled-RISC-V.git	# 下载源码
-   cd labeled-RISC-V
-   git submodule update --init	# 安装子模块
-
-   # 编译riscv-tools
-   cd labeled-RISC-V/riscv-tools	#在riscv-tools目录下
-   git submodule update --init --recursive
+   cd labeled-RISC-V/riscv-tools	# 在riscv-tools目录下
    export RISCV=/opt/riscv/tool
    ./build.sh	# 如果编译32位版本，应运行build-rv32ima.sh脚本
    # 此时进到/opt/riscv/tools/bin目录下，看到的文件是riscv64-unknown-elf-*，而我们还需要riscv64-unknown-linux-gun-*，所以需要下面的步骤 (这步可以更简单一点)
@@ -77,9 +112,9 @@
    cd到riscv-tools目录
    build_project riscv-gnu-toolchain --prefix=$RISCV --with-arch=rv64imafdc --with-abi=lp64d --enable-linux
    ```
-2. 编译riscv-pk和riscv-linux
+#### 2. 编译linux.bin
    ```shell
-   cd ../fpga		#在fpga目录下
+   cd labeled-RISC-V/fpga		#在fpga目录下
    mkdir build
    make -j8 sw
    #注编译不成功！应依据RISCV的值修改riscv-linux/arch/riscv/rootfs/initramfs.txt。再重新编译。
@@ -88,7 +123,7 @@
    # 如果提示一些so文件找不到，应把sysroot/lib下的文件复制到lib目录下，这个方法只是权宜之计！！！
    ```
 
-3. 模拟器中运行
+#### 3. 模拟器中运行
 
    ```bash
    # 编译最小化rootfs
@@ -99,35 +134,33 @@
 
    # 编译和运行模拟器
    cd fpga/emulator
-   make -j8 run-emu	# 成功
+   make -j8 run-emu	# 成功，运行时间大约需要1小时
 
    ```
 
-4. FPGA中运行
+#### 4. 编译boot.bin
 
-  - 编译vivado项目(在fpga目录)
+##### 4.1 编译system_top.bit
 
-     ````
+  ````bash
      source /opt/Xilinx/Vivado/2017.4/settings64.sh
      source /opt/Xilinx/SDK/2017.4/settings64.sh
      make project PRJ=myproject BOARD=zedboard
-     ````
+  ````
 
-     1. 在vivado中打开此项目,即build/myroject-zedboard/myprojct-zedboard.xpr  （参考的绝对路径 /chydata/xilinx/labeled-RISC-V/fpga/build/myproj-zedboard）
-     2. 生成bitstream，即Synthesis->Implementation->Bitstream。再这会生成system_top.bit (pard的bitstream文件)
+    1. 在vivado中打开此项目,即build/myroject-zedboard/myprojct-zedboard.xpr  （参考的绝对路径 /chydata/xilinx/labeled-RISC-V/fpga/build/myproj-zedboard）
+    2. 生成bitstream，即Synthesis->Implementation->Bitstream。这会生成system_top.bit (pard的bitstream文件)
 
 
-  - 准备SD卡
+##### 4.2 编译fsbl.elf
 
-    1. 编译fsbl.elf(First Step Boot Loader)
-
-       - Vivado->file->export->Export Hardware，在build/myproject-zedboard/myproject-zedboard.sdk目录下会生成一个叫system_top.hdf的文件。
+  - Vivado->file->export->Export Hardware，在build/myproject-zedboard/myproject-zedboard.sdk目录下会生成一个叫system_top.hdf的文件。
 
          注：需要把gmake 链接为make
 
          fsbl contents ???
 
-       - 运行hsi命令，hsi是vivado SDK附带的命令 （功能???）
+  - 运行hsi命令，hsi是vivado SDK附带的命令 （功能???）
 
          ```shell
          cd board/zedboard/boot
@@ -138,47 +171,26 @@
 
          ​
 
-    2. 编译u-boot
+##### 4.3 编译u-boot
 
-       ```shell
-       git clone https://github.com/xilinx/u-boot-xlnx
+  ```shell
        cd u-boot-xlnx
        make zynq_zed_defconfig
        make CROSS_COMPILE=arm-linux-gnueabihf-
        cp u-boot u-boot.elf
-       ```
+  ```
 
-       ​
+##### 4.4 生成boot.bin
 
-    3. 编译boot.bin
+  - 将fsbl.elf和u-boot.elf和system_top.bit文件放在build目录下
+  - boot.bin修改的不是gen-bootbin.sh，而是bootgen.bif文件，添加以上文件正确的路径名。且system_top.bit应在u-boot.elf的前面，否则后继步骤里PRM无法正常启动。
+  - `bash gen-bootbin.sh   #BOOT.BIN将会生成在build目录`
 
-       - 将fsbl.elf和u-boot.elf和system_top.bit文件放在build目录下
-       - boot.bin修改的不是gen-bootbin.sh，而是bootgen.bif文件，添加以上文件正确的路径名。且system_top.bit应在u-boot.elf的前面，否则后继步骤里PRM无法正常启动。
-       - `bash gen-bootbin.sh   #BOOT.BIN将会生成在build目录`
+#### 5. 编译system.dtb
 
-    4. 编译linux kernel for PRM
+注：目前(2018.02.07)system.dtb尙有问题，请暂时从网上下载[system.dtb](https://github.com/shzhxh/v9-doc/blob/master/LabeledKernel/system.dtb)。
 
-       ```powershell
-       git clone https://github.com/xilinx/linux-xlnx
-       cd linux-xlnx
-       git checkout f1b1e077d641fc83b54c1b8f168cbb58044fbd4e  # 到2017.03的版本
-       make ARCH=arm xilinx_zynq_defconfig	# 可以在linux-xlnx/arch/arm/configs/目录找到
-       make ARCH=arm menuconfig
-       #  General setup -> Cross-compiler tool prefix: `arm-linux-gnueabihf-`
-       #  General setup -> 不选 `Initial RAM filesystem and RAM disk (initramfs/initrd) support`
-       # device drivers -> character devices -> serial drivers -> 选上xilinx uartlite serial port support
-       make ARCH=arm -j8
-       # 可以看到在arch/arm/boot下生成了zImage
-       ```
-
-       ​
-
-    5. 编译system.dtb
-
-       注：目前(2018.02.07)system.dtb尙有问题，请暂时从网上下载[system.dtb](https://github.com/shzhxh/v9-doc/blob/master/LabeledKernel/system.dtb)。
-
-       ```shell
-       git clone https://github.com/xilinx/device-tree-xlnx
+  ```shell
        cd labeled-RISC-V/fpga/board/zedboard/boot
        vim gen-dts.tcl # 将device_tree_repo_path修改为上方刚clone的仓库
         hsi -nojournal -nolog -source gen-dts.tcl -tclargs ../../../build/myproject-zedboard/myproject-zedboard.sdk/system_top.hdf
@@ -195,41 +207,53 @@
            #address-cells = <1>;
            #size-cells = <1>;
            ranges;
-
+    
            mem_reserved: buffer@100000000 {
              reg = <0x10000000 0x10000000>;
            };
        	};
        };
-
+    
        # 最后，运行如下命令
        dtc -I dts -O dtb -o system.dtb system-top.dts
-       ```
+  ```
+#### 6. 编译zImage
 
-       ​
+  ```shell
+       cd linux-xlnx
+       git checkout f1b1e077d641fc83b54c1b8f168cbb58044fbd4e  # 到2017.03的版本
+       make ARCH=arm xilinx_zynq_defconfig	# 可以在linux-xlnx/arch/arm/configs/目录找到
+       make ARCH=arm menuconfig
+       #  General setup -> Cross-compiler tool prefix: `arm-linux-gnueabihf-`
+       #  General setup -> 不选 `Initial RAM filesystem and RAM disk (initramfs/initrd) support`
+       # device drivers -> character devices -> serial drivers -> 选上xilinx uartlite serial port support
+       make ARCH=arm -j8
+       # 可以看到在arch/arm/boot下生成了zImage
+  ```
 
-    6. 在SD卡上安装PRM
 
-       - 将SD卡接到电脑
+#### 7. 在SD卡上安装PRM
 
-       - cfdisk命令格式化SD卡，创建一个50M分区，一个2G分区
+  - 将SD卡接到电脑
 
-       - mkfs命令将50M分区格式化为vfat，2G分区格式化为ext4
-    ```shell
+  - cfdisk命令格式化SD卡，创建一个50M分区，一个2G分区
+
+  - mkfs命令将50M分区格式化为vfat，2G分区格式化为ext4
+    ​```shell
       mkfs.vfat /dev/sdc1
       mkfs -t ext4 /dev/sdc2
-    ```
+    ​```
 
        - 将2G分区挂载到/mnt, 将50M分区挂载到/mnt/boot
-    ```shell
-      sudo mount /dev/sdc2 /mnt
-      sudo mkdir /mnt/boot
-      sudo mount /dev/sdc1 /mnt/boot
-    ```
+           ​```shell
+        sudo mount /dev/sdc2 /mnt
+        sudo mkdir /mnt/boot
+        sudo mount /dev/sdc1 /mnt/boot
+      ​```
 
-       - 将上几步生成的BOOT.BIN，system.dtb， zImage(PRM的kernel)复制到/mnt/boot目录下
+  - 将上几步生成的BOOT.BIN，system.dtb， zImage(PRM的kernel)复制到/mnt/boot目录下
 
-       - 安装debian基本系统 ???
+  - 安装debian基本系统 ???
 
          ```shell
          sudo qemu-debootstrap --arch armel stable /mnt http://ftp.debian.org/debian
@@ -245,10 +269,13 @@
          > proc /proc proc defaults 0 0
          > /dev/mmcblk0p1 /boot vfat defaults 0 2
          > /dev/mmcblk0p2 / ext4 errors=remount-ro 0 1
-
+           
+         # 将board/zedboard/prm-loader/loader.c和build/linux.bin复制到SD卡中。
+         cp loader.c /mnt/root
+         cp linux.bin /mnt/root
          ```
 
-         ​
+#### 8. 在zedboard上启动PRM
 
   - 设置开发板为SD boot模式(需要动板子上的几个开关???)
 
@@ -271,15 +298,14 @@
 
   - 启动RISC-V子系统
 
-    1. 将board/zedboard/prm-loader/loader.c和build/linux.bin复制到SD卡中。
-
-    2. 编译loader
+    1. 编译loader
 
        ```shell
+       cd /root
        gcc -o loader loader.c
        ```
 
-    3. 通过ssh连到zedboard，用tmux开启两个窗格
+    2. 通过ssh连到zedboard，用tmux开启两个窗格
 
        ```shell
        minicom -D /dev/ttyUL1	# 一个窗格中运行此命令
